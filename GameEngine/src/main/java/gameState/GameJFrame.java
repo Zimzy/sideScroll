@@ -1,45 +1,46 @@
 package gameState;
 
-import com.google.common.eventbus.EventBus;
+import events.EventSingleton;
 import events.GameOverEvent;
-import events.JFrameReadyEvent;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 
-public class GameJFrame extends JFrame{
+public class GameJFrame extends JPanel{
+
     public GameJFrame() {
+
+        this.setPreferredSize(new Dimension(640,480));
+
         JFrame gameFrame = new JFrame("Sample Frame");
         gameFrame.setSize(640, 480);
         gameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        addListener();
+
+        gameFrame.add(this);
+        gameFrame.pack();
         gameFrame.setVisible(true);
 
         setFocusable(true);
-        requestFocus( ); // JPanel now receives key events
-        readyForTermination( );
+        requestFocusInWindow();
     }
 
-    private void readyForTermination( )
-    {
-        addKeyListener( new KeyAdapter( ) {
+    private void addListener() {
+        addKeyListener( new KeyAdapter() {
             // listen for esc, q, end, ctrl-c
-            public void keyPressed(KeyEvent e)
-            { int keyCode = e.getKeyCode( );
+            public void keyPressed (KeyEvent e){
+                int keyCode = e.getKeyCode();
                 if ((keyCode == KeyEvent.VK_ESCAPE) ||
                         (keyCode == KeyEvent.VK_Q) ||
                         (keyCode == KeyEvent.VK_END) ||
-                        ((keyCode == KeyEvent.VK_C) && e.isControlDown( )) ) {
-                    new EventBus().post(new GameOverEvent());
+                        ((keyCode == KeyEvent.VK_C) && e.isControlDown())) {
+                    EventSingleton.OTTO.getEventBus().post(new GameOverEvent());
                 }
             }
         });
-    }
-
-    @Override
-    public void addNotify() {
-        super.addNotify();
-        new EventBus().post(new JFrameReadyEvent());
     }
 }
