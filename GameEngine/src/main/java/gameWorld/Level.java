@@ -1,4 +1,4 @@
-package GameWorld;
+package gameWorld;
 
 public enum Level {
     LEVEL_1;
