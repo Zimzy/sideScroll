@@ -3,13 +3,19 @@ package gameState;
 import events.EventSingleton;
 import events.GameOverEvent;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 
 public class GameJFrame extends JPanel{
+
+    private BufferedImage img;
 
     public GameJFrame() {
 
@@ -30,17 +36,18 @@ public class GameJFrame extends JPanel{
     }
 
     private void addListener() {
-        addKeyListener( new KeyAdapter() {
-            // listen for esc, q, end, ctrl-c
-            public void keyPressed (KeyEvent e){
-                int keyCode = e.getKeyCode();
-                if ((keyCode == KeyEvent.VK_ESCAPE) ||
-                        (keyCode == KeyEvent.VK_Q) ||
-                        (keyCode == KeyEvent.VK_END) ||
-                        ((keyCode == KeyEvent.VK_C) && e.isControlDown())) {
-                    EventSingleton.OTTO.getEventBus().post(new GameOverEvent());
-                }
-            }
-        });
+        addKeyListener( new KeyReader());
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+
+        super.paintComponent(g);
+        doDrawing(g);
+    }
+
+    private void doDrawing(Graphics g) {
+        g.dispose();
+
     }
 }

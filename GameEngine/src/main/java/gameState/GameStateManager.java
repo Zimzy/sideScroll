@@ -1,17 +1,18 @@
 package gameState;
 
+import characters.Character;
+import characters.MainPlayer;
+
+import java.awt.*;
+
 public enum GameStateManager {
     GAME_STATE_MANAGER;
 
-    private static GameJFrame gameFrame;
-
-    public void initializeView() {
-        this.gameFrame = new GameJFrame();
-    }
+    MainPlayer player = new MainPlayer();
 
     public void loadLevel(){};
 
-    public void gameUpdate() {
-
+    public void gameUpdate(Character character) {
+        character.update();
     };
 }

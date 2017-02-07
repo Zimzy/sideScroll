@@ -4,6 +4,8 @@ import events.GameOverEvent;
 import events.JFrameReadyEvent;
 import gameRender.GameRenderManager;
 import gameState.GameStateManager;
+import gameWorld.ActiveLevel;
+import gameWorld.Level;
 
 public class Engine implements Runnable{
 
@@ -34,12 +36,14 @@ public class Engine implements Runnable{
 
     public void run() {
         running = true;
-        GameStateManager.GAME_STATE_MANAGER.initializeView();
+        GameRenderManager.GAME_RENDER_MANAGER.initializeView();
+        ActiveLevel level1 = new ActiveLevel();
+        level1.loadLevel(Level.LEVEL_1);
         while(running) {
-            GameStateManager.GAME_STATE_MANAGER.gameUpdate( ); // game state is updated
-            GameRenderManager.GAME_RENDER_MANAGER.gameRender( ); // render to a buffer
+            GameStateManager.GAME_STATE_MANAGER.gameUpdate(level1.getPlayer()); // game state is updated
+            GameRenderManager.GAME_RENDER_MANAGER.gameRender(level1.getPlayer()); // render to a buffer
             try {
-                Thread.sleep(20); // sleep a bit
+                Thread.sleep(40); // sleep a bit
             }
             catch(InterruptedException ex){}
         }
