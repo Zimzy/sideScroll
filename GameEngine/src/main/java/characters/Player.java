@@ -18,4 +18,8 @@ public abstract class Player implements Entity {
     public CharacterType getType() {
         return null;
     }
+
+    abstract public void postKeyDown(int keyCode);
+
+    abstract public void postKeyUp(int keyCode);
 }

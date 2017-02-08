@@ -4,59 +4,60 @@ package characters;
 import spriteManagement.Sprite;
 import spriteManagement.SpriteContainer;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.awt.event.KeyEvent;
 
 public class MainPlayer extends Player{
 
     private int step = 0;
-    private boolean reverse = false;
-    private int timesReversed = 0;
-
-
+    private int positionX = 100;
+    private int positionY = 200;
+    private boolean walking = false;
 
     private String spriteSheet;
+
+    private PlayerControlManager playerControlManager;
+
 
     public MainPlayer() {
         spriteSheet = this.getClass().getResource("/NPCSprite.PNG").toString().replace("file:","");
         loadSpritesIntoContainer();
+        playerControlManager = new PlayerControlManager();
     }
 
     @Override
     public void loadSpritesIntoContainer() {
-        BufferedImage img;
-        try {
-            img = ImageIO.read(new File(spriteSheet));
-
-            for (int i = 0; i<4; i++)
-                SpriteContainer.SPRITE_CONTAINER.storeInContainer("walk"+i,img.getSubimage(i*32,32*3,32,32));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
     public void update() {
-        if (step == 3) {
-            reverse = true;
-        } else if (step == 0){
-            reverse = false;
-            timesReversed++;
+        if (walking) {
+            positionX += 8;
         }
-
-        step = reverse ? step - 1 : step + 1;
     }
 
+
     public void draw(Graphics g) {
-        Sprite img = SpriteContainer.SPRITE_CONTAINER.getSprite("walk"+step);
-            Graphics2D g2d = (Graphics2D) g;
+        Sprite sprite = SpriteContainer.SPRITE_CONTAINER.getSprite(spriteSheet);
+        Graphics2D g2d = (Graphics2D) g;
 
-            if (img != null)
-                g2d.drawImage(img.getImage(), 100*timesReversed, 100, null);
+        if (sprite != null && sprite.getImage() != null) {
+            g2d.drawImage(sprite.getImage().getSubimage(step*32,32*3,32,32), positionX, positionY, null);
+        }
 
+    }
+
+    public void postKeyDown(int keyCode) {
+        playerControlManager.setButtonPressed(keyCode);
+        if (keyCode == KeyEvent.VK_D) {
+            walking = true;
+        }
+    }
+
+    public void postKeyUp(int keyCode) {
+        playerControlManager.setButtonReleased(keyCode);
+        if (keyCode == KeyEvent.VK_D) {
+            walking = false;
+        }
     }
 }

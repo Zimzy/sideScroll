@@ -1,27 +1,30 @@
 package gameWorld;
 
-import characters.Entity;
-import characters.CharacterType;
-import characters.MainPlayer;
+import characters.*;
 
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.List;
 
-public class ActiveLevel implements EntityCollection{
+public class ActiveLevel{
 
-    private Map<CharacterType, Entity> enemyMap;
-    private MainPlayer player;
+    private List<Player> activePlayers;
+    private List<Enemy> enemiesOnScreen;
 
+    public ActiveLevel() {
+        activePlayers = new LinkedList<>();
+        enemiesOnScreen = new LinkedList<>();
+    }
 
     public void loadLevel(Level level) {
-        player = new MainPlayer();
+        activePlayers.add(new MainPlayer());
     }
 
-    @Override
-    public Map<CharacterType, Entity> getCharacters() {
-        return null;
+    public List<Player> getActivePlayers() {
+        return activePlayers;
     }
 
-    public MainPlayer getPlayer() {
-        return player;
+    public List<Enemy> getEnemiesOnScreen() {
+        return enemiesOnScreen;
     }
+
 }

@@ -35,13 +35,16 @@ public class Engine implements Runnable{
     }
 
     public void run() {
-        running = true;
+
+        //Start first level
+
         GameRenderManager.GAME_RENDER_MANAGER.initializeView();
-        ActiveLevel level1 = new ActiveLevel();
-        level1.loadLevel(Level.LEVEL_1);
+        GameStateManager.GAME_STATE_MANAGER.loadLevel(Level.LEVEL_1);
+        running = true;
+
         while(running) {
-            GameStateManager.GAME_STATE_MANAGER.gameUpdate(level1.getPlayer()); // game state is updated
-            GameRenderManager.GAME_RENDER_MANAGER.gameRender(level1.getPlayer()); // render to a buffer
+            GameStateManager.GAME_STATE_MANAGER.gameUpdate(); // game state is updated
+            GameRenderManager.GAME_RENDER_MANAGER.gameRender(); // render to a buffer
             try {
                 Thread.sleep(100); // sleep a bit
             }
