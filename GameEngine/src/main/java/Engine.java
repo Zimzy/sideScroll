@@ -43,7 +43,7 @@ public class Engine implements Runnable{
             GameStateManager.GAME_STATE_MANAGER.gameUpdate(level1.getPlayer()); // game state is updated
             GameRenderManager.GAME_RENDER_MANAGER.gameRender(level1.getPlayer()); // render to a buffer
             try {
-                Thread.sleep(40); // sleep a bit
+                Thread.sleep(100); // sleep a bit
             }
             catch(InterruptedException ex){}
         }

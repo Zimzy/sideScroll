@@ -4,7 +4,8 @@ import spriteManagement.Sprite;
 
 import java.awt.*;
 
-public interface Character {
+public interface Entity {
+    void loadSpritesIntoContainer();
     Sprite getSprite();
     Sprite getSprite(int animationState);
     CharacterType getType();

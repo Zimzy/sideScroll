@@ -3,7 +3,7 @@ package characters;
 
 import spriteManagement.Sprite;
 
-public abstract class Enemy implements Character{
+public abstract class Enemy implements Entity {
     @Override
     public Sprite getSprite() {
         return null;

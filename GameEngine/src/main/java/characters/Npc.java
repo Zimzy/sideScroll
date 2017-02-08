@@ -2,7 +2,7 @@ package characters;
 
 import spriteManagement.Sprite;
 
-public abstract class Npc implements Character{
+public abstract class Npc implements Entity {
     @Override
     public Sprite getSprite() {
         return null;

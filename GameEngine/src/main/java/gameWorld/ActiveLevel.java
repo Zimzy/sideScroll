@@ -1,6 +1,6 @@
 package gameWorld;
 
-import characters.Character;
+import characters.Entity;
 import characters.CharacterType;
 import characters.MainPlayer;
 
@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class ActiveLevel implements EntityCollection{
 
-    private Map<CharacterType, Character> enemyMap;
+    private Map<CharacterType, Entity> enemyMap;
     private MainPlayer player;
 
 
@@ -17,7 +17,7 @@ public class ActiveLevel implements EntityCollection{
     }
 
     @Override
-    public Map<CharacterType, Character> getCharacters() {
+    public Map<CharacterType, Entity> getCharacters() {
         return null;
     }
 
