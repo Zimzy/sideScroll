@@ -7,12 +7,13 @@ import spriteManagement.SpriteContainer;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
-public class MainPlayer extends Player{
+public class MainPlayer extends Player {
 
     private int step = 0;
     private int positionX = 100;
     private int positionY = 200;
-    private boolean walking = false;
+    private boolean walkright = false;
+    private boolean walkleft = false;
 
     private String spriteSheet;
 
@@ -20,7 +21,7 @@ public class MainPlayer extends Player{
 
 
     public MainPlayer() {
-        spriteSheet = this.getClass().getResource("/NPCSprite.PNG").toString().replace("file:","");
+        spriteSheet = this.getClass().getResource("/NPCSprite.PNG").toString().replace("file:", "");
         loadSpritesIntoContainer();
         playerControlManager = new PlayerControlManager();
     }
@@ -31,10 +32,14 @@ public class MainPlayer extends Player{
 
     @Override
     public void update() {
-        if (walking) {
+        if (walkright) {
             positionX += 8;
         }
+        if (walkleft){
+             positionX -= 8;
+        }
     }
+
 
 
     public void draw(Graphics g) {
@@ -42,7 +47,7 @@ public class MainPlayer extends Player{
         Graphics2D g2d = (Graphics2D) g;
 
         if (sprite != null && sprite.getImage() != null) {
-            g2d.drawImage(sprite.getImage().getSubimage(step*32,32*3,32,32), positionX, positionY, null);
+            g2d.drawImage(sprite.getImage().getSubimage(step * 32, 32 * 3, 32, 32), positionX, positionY, null);
         }
 
     }
@@ -50,14 +55,23 @@ public class MainPlayer extends Player{
     public void postKeyDown(int keyCode) {
         playerControlManager.setButtonPressed(keyCode);
         if (keyCode == KeyEvent.VK_D) {
-            walking = true;
+            walkright = true;
+        }
+        if (keyCode == KeyEvent.VK_A)  {
+            walkleft = true;
         }
     }
 
     public void postKeyUp(int keyCode) {
         playerControlManager.setButtonReleased(keyCode);
         if (keyCode == KeyEvent.VK_D) {
-            walking = false;
+            walkright = false;
+        }
+        if (keyCode == KeyEvent.VK_A)  {
+            walkleft = false;
         }
     }
+
+
+
 }
